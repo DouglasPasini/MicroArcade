@@ -1,4 +1,11 @@
-//Inclus„o das bibliotecas utilizadas
+/*
+ * main.c
+ *
+ * Created: 23/02/2024 13:40:55
+ *  Author: Douglas Pasini
+ */ 
+
+//Inclus√£o das bibliotecas utilizadas
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdlib.h>
@@ -9,8 +16,8 @@
 #include "Lib/matrix.h"
 #include <util/delay.h>
 
-//DefiniÁ„o dos vetores que s„o usados nos jogos
-//As duas ultimas casas dos vetores com [10] s„o as posiÁıes x(horizontal) e y(vertical) em relaÁ„o a matriz
+//Defini√ß√£o dos vetores que s√£o usados nos jogos
+//As duas ultimas casas dos vetores com [10] s√£o as posi√ß√µes x(horizontal) e y(vertical) em rela√ß√£o a matriz
 unsigned int playerPong[2][10] = {{0,0,0x4,0x4,0x4,0,0,0,0,0},{0,0x4,0x4,0x4,0x4,0x4,0,0,0,0}};
 unsigned int enemyPong[10] = {0,0,0,0,0x1000,0x1000,0x1000,0,6,0};
 	
@@ -37,7 +44,7 @@ unsigned int menuImg[N_GAMES][8] = {
 	{0,0,0,0xE000,0x4000,0,0,0},
 	{0,0,0x4000,0x4000,0x6000,0,0,0}};
 
-//PeÁas para o Tetris
+//Pe√ßas para o Tetris
 unsigned int fig[7][4][10] = {
 	{{0,0,0x4000,0xC000,0x4000,0,0,0,4,2},{0,0,0,0xE000,0x4000,0,0,0,4,2},{0,0,0x4000,0x6000,0x4000,0,0,0,4,2},{0,0,0x4000,0xE000,0,0,0,0,4,2}},//"T"
 	{{0,0,0x4000,0x4000,0xC000,0,0,0,4,2},{0,0,0,0xE000,0x2000,0,0,0,4,2},{0,0,0x6000,0x4000,0x4000,0,0,0,4,2},{0,0,0x8000,0xE000,0,0,0,0,4,2}},//"L"
@@ -52,13 +59,13 @@ unsigned int pec[10];
 unsigned int imp[8] = {0};
 unsigned int endGame[8] = {0};
 
-//Ordem das peÁas para o tetris
-unsigned int lista[30] = {3,2,1,6,4,0,3,2,5,1,0,6,4,3,5,2,0,1,4,6,3,5,2,0,4,1,6,3,5,2};//Talvez eu remova a lista caso eu use os valores aleatÛrios
+//Ordem das pe√ßas para o tetris
+unsigned int lista[30] = {3,2,1,6,4,0,3,2,5,1,0,6,4,3,5,2,0,1,4,6,3,5,2,0,4,1,6,3,5,2};//Talvez eu remova a lista caso eu use os valores aleat√≥rios
 
-//DefiniÁ„o das vari·veis que s„o usados nos jogos
-//Algumas delas s„o reaproveitadas em outros jogos para economizar memÛria 
+//Defini√ß√£o das vari√°veis que s√£o usados nos jogos
+//Algumas delas s√£o reaproveitadas em outros jogos para economizar mem√≥ria 
 
-//O aux1 atribui alguns valores no inÌcio dos jogos
+//O aux1 atribui alguns valores no in√≠cio dos jogos
 char aux1 = 0;
 char aux2 = 1;
 
@@ -88,9 +95,9 @@ char scorePlayer = 1;
 char scoreEnemy = 1;
 int pointTimer = 0;
 
-//Respons·vel por apagar as linhas completas do tetris
+//Respons√°vel por apagar as linhas completas do tetris
 void apagarLinha(unsigned int *vet){
-	//*vet -> recebe o vetor das peÁas que j· cairam
+	//*vet -> recebe o vetor das pe√ßas que j√° cairam
 	unsigned int vet_temp[8];	
 	unsigned int temp = vet[0]&vet[1]&vet[2]&vet[3]&vet[4]&vet[5]&vet[6]&vet[7];
 	unsigned int cont = 0;			
@@ -113,7 +120,7 @@ void apagarLinha(unsigned int *vet){
 }
 
 void gerarComida(unsigned int *vetComida, int maxX, int maxY) {
-	// Gera coordenadas aleatÛrias para a comida
+	// Gera coordenadas aleat√≥rias para a comida
 	do{
 		posX = (rand()%(maxX+1));
 		posY = (rand()%(maxY+1));
@@ -122,7 +129,7 @@ void gerarComida(unsigned int *vetComida, int maxX, int maxY) {
 	ligaLED(vetComida,posX,posY);
 }
 
-//Faz uma animaÁ„o quando inicia ou perde os jogos
+//Faz uma anima√ß√£o quando inicia ou perde os jogos
 void gameOver(){
 	limparVetores(endGame,8);
 	for(int i=0; i<16; i++){
@@ -148,7 +155,7 @@ void gameOver(){
 	aux1 = 0;
 }
 
-//As proximas funÁıes se tratam dos jogos em si
+//As proximas fun√ß√µes se tratam dos jogos em si
 void tetris(){
 	if(aux1 == 0){ 
 		aux1 = 1;
@@ -166,11 +173,11 @@ void tetris(){
 	mandaImagem(imp);
 	limparVetores(imp,8);
 	
-	//Acelera a peÁa que est· em queda
+	//Acelera a pe√ßa que est√° em queda
 	if(B_DOWN == 0){maxMoveTime = 200;}
 	else{maxMoveTime = 900;}
 	
-	//ApÛs um certo tempo, salva as peÁas que cairam 
+	//Ap√≥s um certo tempo, salva as pe√ßas que cairam 
 	if(contReg >= maxContReg){
 		contReg = 0;
 		numList++;
@@ -179,14 +186,14 @@ void tetris(){
 		unirVetores(pec,res,res);
 		atribuirVetores(pec,fig[lista[numList]][contRot]);
 		for(int i=0; i<4; i++){
-			if(colisaoSuperiorWall(pec) == 0){up(pec);} //Move as peÁas geradas para o topo
+			if(colisaoSuperiorWall(pec) == 0){up(pec);} //Move as pe√ßas geradas para o topo
 		}
 	}
 	
 	//Verifica e apaga as linhas completas
 	apagarLinha(res);
 	
-	//Faz a movimentaÁ„o lateral das peÁas em queda
+	//Faz a movimenta√ß√£o lateral das pe√ßas em queda
 	if(B_LEFT == 0 && colisaoEsquerdaWall(pec) == 0 && colisaoEsquerdaRef(pec,res) == 0){
 		left(pec);
 	}	
@@ -194,11 +201,11 @@ void tetris(){
 		right(pec);
 	}
 	
-	//Salva a posiÁ„o do centro das peÁas 
+	//Salva a posi√ß√£o do centro das pe√ßas 
 	posX = pec[8];
 	posY = pec[9];	
 	
-	//Rotaciona as peÁas em queda
+	//Rotaciona as pe√ßas em queda
 	if(B_ACTION == 0){
 		contRot++;
 		if(contRot > 3){contRot = 0;}
@@ -325,7 +332,7 @@ void snake(){
 		desligaLED(pec,posX,posY);
 	}
 	
-	//Essse if È para verificar se o jogador perdeu
+	//Essse if √© para verificar se o jogador perdeu
 	if(snakeHead[8] > 8 || snakeHead[8] < 1 || snakeHead[9] > 16 || snakeHead[9] < 1 || (colisaoEsquerdaRef(snakeHead,snakeVet) == 1 && dirX == 0) || (colisaoDireitaRef(snakeHead,snakeVet) == 1 && dirX == 1) || (colisaoSuperiorRef(snakeHead,snakeVet) == 1 && dirY == 1) || (colisaoInferiorRef(snakeHead,snakeVet) == 1 && dirY == 0)){
 		gameState = GAMEOVER;
 	}
@@ -335,7 +342,7 @@ void snake(){
 	if(dirX == 0){moveSnake(snakeVet,segment,0,-1,posAnterior);left(snakeHead);}//left
 	if(dirX == 1){moveSnake(snakeVet,segment,0,1,posAnterior);right(snakeHead);}//right
 		
-	//Verifica se È necessario gerar a proxima comida
+	//Verifica se √© necessario gerar a proxima comida
 	if(vetorVazio(pec) == 0){gerarComida(pec,8,16);}	
 	
 	//Verifica se o jogador ganhou
@@ -382,7 +389,7 @@ void breakout(){
 		dirX^=1;
 	}
 	
-	//Ainda falta adicionar as colisıes nas outras direÁıes e fazer o jogador perder quando a bolinha tocar a parte inferior (assim como adicionar vidas)	
+	//Ainda falta adicionar as colis√µes nas outras dire√ß√µes e fazer o jogador perder quando a bolinha tocar a parte inferior (assim como adicionar vidas)	
 		
 	ballMov(1,1,dirX,dirY,pec);
 	
@@ -416,7 +423,7 @@ void minesWeeper(){
 		for(int i=0; i<50; i++){gerarComida(res,8,15);}
 		for(int i=1; i<9; i++){desligaLED(res,i,1);}
 		for(int j=0; j<8; j++){endGame[j] = 0x7FFF;}
-		maxMoveTime = 300; //Para piscar a posiÁ„o do cursor
+		maxMoveTime = 300; //Para piscar a posi√ß√£o do cursor
 		maxTick = 150;
 	}
 	limparVetores(imp,8);
@@ -475,12 +482,12 @@ void minesWeeper(){
 	if(B_ACTION == 0 && verificarLED(res,pec[8],pec[9]) == 1){
 		gameState = GAMEOVER;
 	}
-	//SÛ falta verificar se o jogador ganhou (fazer um & entre o res e o endGame)
+	//S√≥ falta verificar se o jogador ganhou (fazer um & entre o res e o endGame)
 		
 	contRot = 1;
 }
 
-//Os proximos jogos s„o apenas testes
+//Os proximos jogos s√£o apenas testes
 
 unsigned int bulletsVet[8] = {0};
 unsigned int enemiesVet[8] = {0};
@@ -525,7 +532,7 @@ void spaceInvaders(){
 		contBullet = 0;
 	}
 	if(colisaoSuperiorRef(bulletsVet,res) == 1){
-		//verificar a posiÁ„o da colis„o e destruir tanto o res quanto o bullet 
+		//verificar a posi√ß√£o da colis√£o e destruir tanto o res quanto o bullet 
 	}
 	
 }
@@ -631,7 +638,7 @@ void pause(){
 	}
 }
 
-//Incrementa vari·veis de contagem em 1 milisegundo (0,001s)
+//Incrementa vari√°veis de contagem em 1 milisegundo (0,001s)
 ISR(TIMER0_OVF_vect){	
 	TCNT0+=131;
 	if(gameState == RUNNING && gameMode == TETRIS){
@@ -696,16 +703,16 @@ ISR(TIMER0_OVF_vect){
 	}	
 }
 
-//FunÁ„o principal onde s„o feitas as configuraÁıes e onde est· o loop do jogo
+//Fun√ß√£o principal onde s√£o feitas as configura√ß√µes e onde est√° o loop do jogo
 int main(void){
 	//Inicializa a matriz
 	inicializa();
 	
-	//ConfiguraÁ„o das entradas (botıes) em pull-up
+	//Configura√ß√£o das entradas (bot√µes) em pull-up
 	PORTD|=(1<<3)|(1<<4)|(1<<5)|(1<<6)|(1<<7);
 	PORTB|=(1<<0)|(1<<6)|(1<<7);
 	
-	//ConfiguraÁ„o do temporizador/contador e da interrupÁ„o
+	//Configura√ß√£o do temporizador/contador e da interrup√ß√£o
 	TCCR0B|=0b00000010;
 	TCNT0+=131;
 	TIMSK0|=1;
@@ -723,7 +730,7 @@ int main(void){
 }
 
 
-//Estava usando para tentar colocar m˙sica no jogo
+//Estava usando para tentar colocar m√∫sica no jogo
 /*
 int notaTemp=0;
 int nota = 0, n=12;
@@ -747,17 +754,17 @@ ISR(TIMER2_OVF_vect){
 
 
 int main(void){
-	//ConfiguraÁ„o da saÌda de audio
+	//Configura√ß√£o da sa√≠da de audio
 	DDRB|=(1<<3);
 	PORTB|=(1<<6)|(1<<7);
 	TCCR2B|=0b00000010;
 	TIMSK2|=1;
-	//ConfiguraÁ„o do temporizador de 1ms
+	//Configura√ß√£o do temporizador de 1ms
 	TCCR0B|=0b00000010;
 	TCNT0+=131;
 	TIMSK0|=1;
 	sei();
-	//ConfiguraÁ„o das entradas (botıes) em pull-up
+	//Configura√ß√£o das entradas (bot√µes) em pull-up
 	PORTD|=(1<<3)|(1<<4)|(1<<5)|(1<<6)|(1<<7);
 	PORTB|=(1<<0)|(1<<6)|(1<<7);
 	while(1){		
