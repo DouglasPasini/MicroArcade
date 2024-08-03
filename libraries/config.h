@@ -9,12 +9,12 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-//Definição das saídas que enviam sinais para as matrizes
+//DefiniÃ§Ã£o das saÃ­das que enviam sinais para as matrizes
 #define CS (1<<PD2)
 #define CLK (1<<PD1)
 #define DATA (1<<PD0)
 
-//Definição das entradas (botões)
+//DefiniÃ§Ã£o das entradas (botÃµes)
 #define B_RIGHT (PINB&(1<<7))
 #define B_LEFT (PINB&(1<<6))
 #define B_UP (PIND&(1<<3))
@@ -24,10 +24,10 @@
 #define B_EXIT (PIND&(1<<7))
 #define B_PAUSE (PINB&(1<<0))
 
-//Definição da frequencia do microcontrolador
+//DefiniÃ§Ã£o da frequencia do microcontrolador
 #define F_CPU 1000000 
 
-//Definição dos estados e jogos
+//DefiniÃ§Ã£o dos estados e jogos
 #define N_GAMES 8 
 
 #define TETRIS 0
@@ -44,7 +44,7 @@
 #define GAMEOVER 2
 #define PAUSE 3
 
-//Definição dos tempos para as frequências da saída de audio  
+//DefiniÃ§Ã£o dos tempos para as frequÃªncias da saÃ­da de audio  
 #define DO 19
 #define DOs 31  
 #define RE 43
