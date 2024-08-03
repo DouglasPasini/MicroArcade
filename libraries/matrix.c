@@ -7,7 +7,7 @@
 
 #include "matrix.h"
 
-//Manda informaÁıes serialmente para as matrizes
+//Manda informa√ß√µes serialmente para as matrizes
 void mandaComando(unsigned char addrs, unsigned int data){
 	unsigned int tmp = (data>>8)&0xFF;
 	PORTD&=~(CS); //CS=0
@@ -39,7 +39,7 @@ void inicializa(){
 }
 
 void mandaImagem(unsigned int *vet){
-	//Manda os comandos para a matriz no circuito na pr·tica
+	//Manda os comandos para a matriz no circuito na pr√°tica
 	/*
 	unsigned int rotVet[8] = {0};	
 	rotacionaVetor(vet,rotVet);	
@@ -49,7 +49,7 @@ void mandaImagem(unsigned int *vet){
 	}
 	*/
 	
-	//Manda os comandos para a matriz na simulaÁ„o
+	//Manda os comandos para a matriz na simula√ß√£o
 	for(int i=0; i<8; i++){
 		mandaComando(i+1,vet[7-i]);	
 	}	
