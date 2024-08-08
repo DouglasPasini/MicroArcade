@@ -5,7 +5,7 @@
  *  Author: Douglas Pasini
  */ 
 
-#include "vector.h"
+#include "../Vector/vector.h"
 
 //Rotaciona o vetor para ficar melhor apresentado na matriz do circuito ná prática
 void rotacionaVetor(unsigned int *vet, unsigned int *rotVet){
