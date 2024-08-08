@@ -6,7 +6,7 @@
  */ 
 
 
-#include "move.h"
+#include "../Move/move.h"
 
 //As seguintes funções são responsáveis por movimentar os vetores nas direções indicadas
 void up(unsigned int *vet){
