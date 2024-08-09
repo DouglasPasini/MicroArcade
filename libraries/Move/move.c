@@ -97,3 +97,10 @@ void moveSnake(unsigned int *vet, int nSeg, int dir, int sent, unsigned char ant
 		ligaLED(vet,anterior[i][0],anterior[i][1]);
 	}
 }
+
+//Move o jogador por um mapa maior do que a matriz
+void mapaParcial(unsigned long *vetRef,unsigned int *vetRes, char deslH, char deslV){
+	for(int i=0; i<8; i++){
+		vetRes[i] = vetRef[i+deslH]>>deslV;
+	}
+}
