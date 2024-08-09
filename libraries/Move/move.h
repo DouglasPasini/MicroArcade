@@ -27,4 +27,7 @@ void ballMov(char pX, char pY, char dirX, char dirY,unsigned int *vet);
 //Move os segmentos da cobra no snake
 void moveSnake(unsigned int *vet, int nSeg, int dir, int sent, unsigned char anterior[][2]);
 
+//Move o jogador por um mapa maior do que a matriz
+void mapaParcial(unsigned long *vetRef,unsigned int *vetRes, char deslH, char deslV);
+
 #endif /* MOVE_H_ */
