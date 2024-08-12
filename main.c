@@ -538,24 +538,51 @@ void spaceInvaders(){
 	
 }
 
-void mapaParcial(unsigned int *vetRef,unsigned int *vetRes, int desl){
-	vetRes[0]=vetRef[0+desl];
-	vetRes[1]=vetRef[1+desl];
-	vetRes[2]=vetRef[2+desl];
-	vetRes[3]=vetRef[3+desl];
-	vetRes[4]=vetRef[4+desl];
-	vetRes[5]=vetRef[5+desl];
-	vetRes[6]=vetRef[6+desl];
-	vetRes[7]=vetRef[7+desl];
-}
+unsigned long mapa[15]={0xFFFFFFFF,0x80000001,0x80000001,0x80001009,0x80001009,0x80001009,0x80001009,0x80001009,0x80000109,0x80000109,0x80000109,0x80000109,0x80000109,0x80000001,0xFFFFFFFF};
+char deslHor = 0, deslVer = 1;
 
 void maze(){
-	mandaImagem(mapPong);
+	if (aux1==0){
+		aux1=1;
+		atribuirVetores(pec,ball);
+	}
+		
+	mapaParcial(mapa,res,deslHor,deslVer);
+	unirVetores(pec,res,imp);
+	mandaImagem(imp);
+	if(B_DOWN == 0 && colisaoInferiorRef(pec,res) == 0 && pec[9]<16){
+		if(pec[9]<10){down(pec);}
+		else{
+			if(deslVer>0){deslVer--;}
+			else{down(pec);}				
+		}
+	}
+	if(B_UP == 0 && colisaoSuperiorRef(pec,res) == 0 && pec[9]>1){
+		if(pec[9]>6){up(pec);}
+		else{
+			if(deslVer<16){deslVer++;}				
+			else{up(pec);}			
+		}
+	}
+	if(B_LEFT == 0 && colisaoEsquerdaRef(pec,res) == 0 && pec[8]>1){	
+		if(pec[8]>4){left(pec);}
+		else{
+			if(deslHor>0){deslHor--;}
+			else{left(pec);}			
+		}		
+	}
+	if(B_RIGHT == 0 && colisaoDireitaRef(pec,res) == 0 && pec[8]<8){
+		if(pec[8]<5){right(pec);}
+		else{
+			if(deslHor+7 < 14){deslHor++;}//por conta do limite do mapa
+			else{right(pec);}
+		}
+	}
 }
 
 unsigned int stairs[2][8]={{0,0,0x2,0x2,0xA,0xA,0x2A,0x2A},{0,0x2,0x2,0xA,0xA,0x2A,0x2A,0x2A}};
 
-//Tentei criar uma gravidade
+//Tentei criar uma gravidade para o jogo de plataforma
 void test(){
 	if (aux1 == 0){
 		aux1 = 1;
