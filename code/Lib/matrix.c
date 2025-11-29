@@ -5,7 +5,7 @@
  *  Author: Douglas Pasini
  */ 
 
-#include "../Matrix/matrix.h"
+#include "matrix.h"
 
 //Manda informações serialmente para as matrizes
 void mandaComando(unsigned char addrs, unsigned int data){
